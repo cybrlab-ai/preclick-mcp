@@ -48,7 +48,7 @@ The PreClick MCP Server provides AI-powered malicious URL detection through the 
 
 Authentication requirements depend on deployment mode:
 
-- Hosted endpoint (`https://urlcheck.ai/mcp`): API key is optional for up to 100 requests/day.
+- Hosted endpoint (`https://preclick.ai/mcp`): API key is optional for up to 100 requests/day.
 - Hosted endpoint above trial quota: API key required.
 
 ```http
@@ -61,7 +61,7 @@ X-API-Key: your-api-key-here
 
 ### Streamable HTTP (Production)
 
-**Endpoint**: `https://urlcheck.ai/mcp`
+**Endpoint**: `https://preclick.ai/mcp`
 
 | Method   | Path   | Description                              |
 |----------|--------|------------------------------------------|
@@ -89,7 +89,7 @@ The server supports two modes:
 ### Example: Initialize Session (stateful mode only)
 
 ```bash
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "X-API-Key: your-api-key" \
@@ -637,7 +637,7 @@ Task execution failures are returned as JSON-RPC errors with a message string on
 
 The API enforces rate limits to ensure fair usage and service availability. Limits may be adjusted without notice based on operational requirements.
 
-### Hosted Trial Limit (`urlcheck.ai`)
+### Hosted Trial Limit (`preclick.ai`)
 
 | Limit            | Description                                      |
 |------------------|--------------------------------------------------|

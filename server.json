@@ -19,7 +19,7 @@
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://urlcheck.ai/mcp",
+      "url": "https://preclick.ai/mcp",
       "headers": [
         {
           "name": "X-API-Key",

@@ -10,7 +10,7 @@
 
 Authentication requirements depend on deployment mode:
 
-- Hosted endpoint (`https://urlcheck.ai/mcp`): API key is optional for up to 100 requests/day.
+- Hosted endpoint (`https://preclick.ai/mcp`): API key is optional for up to 100 requests/day.
 - Hosted endpoint above trial quota: API key required.
 
 When using an API key, send it via the `X-API-Key` header.
@@ -19,7 +19,7 @@ When using an API key, send it via the `X-API-Key` header.
 
 ```http
 POST /mcp HTTP/1.1
-Host: urlcheck.ai
+Host: preclick.ai
 Content-Type: application/json
 Accept: application/json, text/event-stream
 X-API-Key: your-api-key-here
@@ -36,7 +36,7 @@ If you are using hosted anonymous trial access, omit `X-API-Key` and stay within
 
 ```bash
 # First request: initialize (no session ID needed yet)
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "X-API-Key: your-api-key-here" \
@@ -57,7 +57,7 @@ curl -X POST https://urlcheck.ai/mcp \
 
 ```bash
 # All non-initialize requests require protocol version; session ID is required only in stateful mode
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "X-API-Key: your-api-key-here" \

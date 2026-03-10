@@ -3,6 +3,7 @@
 ## 0.2.0 — 2026-03-10
 
 - Breaking change: updated MCP Registry ID from `ai.urlcheck/urlcheck-mcp` to `ai.preclick/preclick-mcp`.
+- Updated primary endpoint from `urlcheck.ai/mcp` to `preclick.ai/mcp`.
 - Hard cutover: old registry ID is retired and no longer maintained.
 - Bumped MCP manifest version to `0.2.0`.
 

@@ -29,8 +29,8 @@ For manual MCP bridge configuration (any client), see [Quick Start](#quick-start
 
 | Deployment                         | `X-API-Key` Requirement         | Notes                                 |
 |------------------------------------|---------------------------------|---------------------------------------|
-| Hosted (`https://urlcheck.ai/mcp`) | Optional up to 100 requests/day | API key recommended for higher limits |
-| Hosted (`https://urlcheck.ai/mcp`) | Required above trial quota      | Contact support for provisioned keys  |
+| Hosted (`https://preclick.ai/mcp`) | Optional up to 100 requests/day | API key recommended for higher limits |
+| Hosted (`https://preclick.ai/mcp`) | Required above trial quota      | Contact support for provisioned keys  |
 
 ## Important Notice
 
@@ -57,7 +57,7 @@ Trial (hosted, up to 100 requests/day without API key):
   "mcpServers": {
     "preclick-mcp": {
       "transport": "streamable-http",
-      "url": "https://urlcheck.ai/mcp"
+      "url": "https://preclick.ai/mcp"
     }
   }
 }
@@ -70,7 +70,7 @@ Authenticated (recommended for stable and higher-volume usage):
   "mcpServers": {
     "preclick-mcp": {
       "transport": "streamable-http",
-      "url": "https://urlcheck.ai/mcp",
+      "url": "https://preclick.ai/mcp",
       "headers": {
         "X-API-Key": "YOUR_API_KEY"
       }
@@ -83,7 +83,7 @@ Authenticated (recommended for stable and higher-volume usage):
 
 ```bash
 # Only required if the server is running in stateful mode
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "X-API-Key: YOUR_API_KEY" \
@@ -107,7 +107,7 @@ curl -X POST https://urlcheck.ai/mcp \
 - **Direct**: Omit the `task` parameter for synchronous execution
 
 ```bash
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "MCP-Protocol-Version: 2025-06-18" \
@@ -151,7 +151,7 @@ Response (task submitted):
 Optional: Provide an url visiting intent for additional context (recommended but not required):
 
 ```bash
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "MCP-Protocol-Version: 2025-06-18" \
@@ -187,7 +187,7 @@ Direct-call timeout note: synchronous tool calls use a bounded server wait windo
 ### 4. Poll for Results
 
 ```bash
-curl -X POST https://urlcheck.ai/mcp \
+curl -X POST https://preclick.ai/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "MCP-Protocol-Version: 2025-06-18" \
@@ -240,7 +240,7 @@ See [Full API Documentation](docs/API.md) for detailed schemas and examples.
 
 Authentication requirements depend on deployment mode:
 
-- Hosted endpoint (`https://urlcheck.ai/mcp`): API key is optional for up to 100 requests/day.
+- Hosted endpoint (`https://preclick.ai/mcp`): API key is optional for up to 100 requests/day.
 - Hosted endpoint above trial quota: API key required.
 
 See [Authentication Guide](docs/AUTHENTICATION.md) for details on getting API keys.
@@ -255,7 +255,7 @@ See [Authentication Guide](docs/AUTHENTICATION.md) for details on getting API ke
 | MCP Spec          | 2025-06-18                 |
 | Client Protocol   | 2025-06-18                 |
 | Transport         | Streamable HTTP            |
-| Endpoint          | `https://urlcheck.ai/mcp`  |
+| Endpoint          | `https://preclick.ai/mcp`  |
 | Typical Scan Time | Varies by target           |
 | Supported Schemes | HTTP, HTTPS                |
 | Max URL Length    | Enforced by server         |
