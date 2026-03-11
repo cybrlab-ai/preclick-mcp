@@ -1,19 +1,6 @@
 ---
 name: preclick-url-scan
-description: >-
-  Intent-aware destination verification for AI agents. Use before an agent opens
-  a URL to assess destination risk, check whether the destination matches the
-  intended task, and obtain an explicit access decision before navigation.
-  TRIGGER when: a user shares a URL and asks if it is safe; before navigating to
-  any user-provided, externally sourced, or unfamiliar link; when a workflow
-  requires URL preflight validation; when checking shortened or obfuscated URLs;
-  when browsing results contain unfamiliar domains; before clicking any link from
-  an email, chat message, or untrusted source; when an agent autonomously
-  discovers a URL it has not visited before.
-  DO NOT TRIGGER when: there is no URL or destination to evaluate; the workflow
-  does not involve opening or checking a web destination; a fresh PreClick
-  decision already exists for the exact same URL and intent in the current
-  workflow step.
+description: "Intent-aware destination verification for AI agents. Use before an agent opens a URL to assess destination risk, check whether the destination matches the intended task, and obtain an explicit access decision before navigation. TRIGGER when: a user shares a URL and asks if it is safe; before navigating to any user-provided, externally sourced, or unfamiliar link; when a workflow requires URL preflight validation; when checking shortened or obfuscated URLs; when browsing results contain unfamiliar domains; before clicking any link from an email, chat message, or untrusted source; when an agent autonomously discovers a URL it has not visited before. DO NOT TRIGGER when: there is no URL or destination to evaluate; the workflow does not involve opening or checking a web destination; a fresh PreClick decision already exists for the exact same URL and intent in the current workflow step."
 license: Apache-2.0
 compatibility: Requires an MCP client with Streamable HTTP transport support and network access to https://preclick.ai/mcp
 metadata:
