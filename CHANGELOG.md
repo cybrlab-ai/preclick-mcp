@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 — 2026-03-11
+
+- Add Agent Skills SKILL.md.
+- Normalized public `agent_access_reason` values, stable codes such as `no_immediate_risk_detected`, `elevated_risk_signals`, `threat_intelligence_match`, `intent_inconsistent_destination`, `insufficient_service_verification`, and `insufficient_trust_signals`.
+
 ## 0.2.0 — 2026-03-10
 
 - Breaking change: updated MCP Registry ID from `ai.urlcheck/urlcheck-mcp` to `ai.preclick/preclick-mcp`.

@@ -178,9 +178,9 @@ Max intent length: 248 characters.
 Low-information or instruction-like intent strings are treated as not provided.
 Result includes `intent_alignment` (`misaligned`, `no_mismatch_detected`, `inconclusive`, or `not_provided`).
 `no_mismatch_detected` is only returned when intent analysis had sufficient evidence; if intent analysis is unavailable or evidence is limited, result is `inconclusive`.
-When `intent_alignment` is `misaligned` and confirmed by successful high-confidence analysis, the response directive is `DENY` with reason `intent_mismatch` (policy gate; risk score is unchanged).
-When high-confidence analysis confirms an unverified high-impact service claim with weak identity corroboration in a low-confidence context, the response directive is also `DENY` with reason `unverified_high_impact_claim` (policy gate; risk score is unchanged).
-In additional contextual high-impact policy cases, responses may return `DENY` with reason `high_impact_claim_contextual` (policy gate; risk score is unchanged).
+When `intent_alignment` is `misaligned` and confirmed by successful high-confidence analysis, the response directive is `DENY` with reason `intent_inconsistent_destination` (policy gate; risk score is unchanged).
+When high-confidence analysis confirms an unverified high-impact service claim with weak identity corroboration in a low-confidence context, the response directive is also `DENY` with reason `insufficient_service_verification` (policy gate; risk score is unchanged).
+In additional contextual low-evidence policy cases, responses may return `DENY` with reasons such as `insufficient_service_verification` or `insufficient_trust_signals` (policy gate; risk score is unchanged).
 
 Direct-call timeout note: synchronous tool calls use a bounded server wait window (hosted default 100s). If timeout is reached, the server returns JSON-RPC `-32603` with `error.data.taskId` and `error.data.pollInterval` so you can continue via `tasks/get` / `tasks/result`.
 
@@ -215,7 +215,7 @@ Response (completed task with agent directive):
       "confidence": 0.95,
       "analysis_complete": true,
       "agent_access_directive": "ALLOW",
-      "agent_access_reason": "clean",
+      "agent_access_reason": "no_immediate_risk_detected",
       "intent_alignment": "not_provided"
     },
     "summary": "URL scan completed"

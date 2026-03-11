@@ -173,7 +173,7 @@ When the `task` parameter is omitted, returns the scan result directly (synchron
   "content": [
     {
       "type": "text",
-      "text": "{\"risk_score\":0.15,\"confidence\":0.92,\"analysis_complete\":true,\"agent_access_directive\":\"ALLOW\",\"agent_access_reason\":\"clean\",\"intent_alignment\":\"not_provided\"}"
+      "text": "{\"risk_score\":0.15,\"confidence\":0.92,\"analysis_complete\":true,\"agent_access_directive\":\"ALLOW\",\"agent_access_reason\":\"no_immediate_risk_detected\",\"intent_alignment\":\"not_provided\"}"
     }
   ]
 }
@@ -267,9 +267,9 @@ Scan results include `intent_alignment` in both direct-call and task-result resp
 - `not_provided`: no intent was supplied
 
 Policy behavior for intent mismatch:
-- When `intent_alignment = misaligned` is confirmed by successful high-confidence analysis, `agent_access_directive` is set to `DENY` with `agent_access_reason = intent_mismatch` even if `risk_score` is low.
-- When high-confidence analysis confirms an unverified high-impact service claim (e.g., financial, healthcare, legal, government-facing) with weak identity corroboration in a low-confidence context, `agent_access_directive` is set to `DENY` with `agent_access_reason = unverified_high_impact_claim` while `risk_score` remains unchanged.
-- In additional contextual high-impact policy cases, `agent_access_directive` can also be `DENY` with `agent_access_reason = high_impact_claim_contextual` while `risk_score` remains unchanged.
+- When `intent_alignment = misaligned` is confirmed by successful high-confidence analysis, `agent_access_directive` is set to `DENY` with `agent_access_reason = intent_inconsistent_destination` even if `risk_score` is low.
+- When high-confidence analysis confirms an unverified high-impact service claim (e.g., financial, healthcare, legal, government-facing) with weak identity corroboration in a low-confidence context, `agent_access_directive` is set to `DENY` with `agent_access_reason = insufficient_service_verification` while `risk_score` remains unchanged.
+- In additional contextual low-evidence policy cases, `agent_access_directive` can also be `DENY` with `agent_access_reason = insufficient_trust_signals` while `risk_score` remains unchanged.
 - This is a policy gate; the security `risk_score` remains unchanged.
 
 #### Input Schema
@@ -376,7 +376,7 @@ Wait for task completion and return the tool result.
     "confidence": 0.75,
     "analysis_complete": true,
     "agent_access_directive": "DENY",
-    "agent_access_reason": "suspicious",
+    "agent_access_reason": "elevated_risk_signals",
     "intent_alignment": "not_provided"
   },
   "summary": "URL scan completed"
@@ -461,7 +461,7 @@ Use `agent_access_directive` for access decisions. It translates the risk score 
 - `RETRY_LATER` — Temporary failure (connection error, rate limited)
 - `REQUIRE_CREDENTIALS` — Authentication required
 
-`agent_access_reason` includes values such as `clean`, `suspicious`, `blocklisted`, validation/network reasons, `intent_mismatch` (policy denial when intent mismatch is confirmed), `unverified_high_impact_claim` (policy denial when high-impact identity corroboration is not enough), and `high_impact_claim_contextual` (policy denial in additional contextual high-impact claim cases).
+`agent_access_reason` uses normalized public reason codes such as `no_immediate_risk_detected`, `elevated_risk_signals`, `threat_intelligence_match`, validation/network reasons, `intent_inconsistent_destination`, `insufficient_service_verification`, and `insufficient_trust_signals`.
 
 ---
 
@@ -560,10 +560,10 @@ Common cases:
 URL validation runs **after** task creation and produces a completed task result with `agent_access_*` fields. It does **not** return JSON-RPC errors.
 
 Typical reasons include:
-- `invalid_url`, `invalid_scheme`, `missing_host`
-- `local_network_only`, `reserved_domain`, `tor_network_only`, `overlay_network_only`
+- `invalid_url_input`, `unsupported_url_scheme`, `missing_url_host`
+- `local_network_target`, `non_public_domain`, `anonymous_network_target`, `overlay_network_target`
 - `connection_failed` (temporary network/DNS infrastructure issue, retryable)
-- `dns_failed` (authoritative DNS failure such as NXDOMAIN/no records)
+- `dns_resolution_failed` (authoritative DNS failure such as NXDOMAIN/no records)
 
 Additional security validation reasons may be returned.
 
@@ -615,15 +615,15 @@ URL validation happens **after** task creation. Invalid URLs produce a **complet
 
 | Validation Result                               | Example Reason         | Notes                                  |
 |-------------------------------------------------|------------------------|----------------------------------------|
-| Too short/too long                              | `invalid_url`          | Early exit                             |
-| Invalid scheme                                  | `invalid_scheme`       | Early exit                             |
-| Missing host                                    | `missing_host`         | Early exit                             |
-| `.local`/`.internal`/`.home.arpa` domain        | `local_network_only`   | Early exit (local/private network)     |
-| `.test`/`.invalid`/`.example`/`.alt` domain     | `reserved_domain`      | Early exit (reserved domain namespace) |
-| `.onion` domain                                 | `tor_network_only`     | Early exit (Tor network)               |
-| `.i2p` domain                                   | `overlay_network_only` | Early exit (I2P overlay network)       |
-| Temporary DNS/connection infrastructure failure | `connection_failed`    | Early exit (transient, retry later)    |
-| Authoritative DNS NXDOMAIN/no-records           | `dns_failed`           | Early exit (domain not resolvable)     |
+| Too short/too long                              | `invalid_url_input`            | Early exit                             |
+| Invalid scheme                                  | `unsupported_url_scheme`       | Early exit                             |
+| Missing host                                    | `missing_url_host`             | Early exit                             |
+| `.local`/`.internal`/`.home.arpa` domain        | `local_network_target`         | Early exit (local/private network)     |
+| `.test`/`.invalid`/`.example`/`.alt` domain     | `non_public_domain`            | Early exit (reserved domain namespace) |
+| `.onion` domain                                 | `anonymous_network_target`     | Early exit (Tor network)               |
+| `.i2p` domain                                   | `overlay_network_target`       | Early exit (I2P overlay network)       |
+| Temporary DNS/connection infrastructure failure | `connection_failed`            | Early exit (transient, retry later)    |
+| Authoritative DNS NXDOMAIN/no-records           | `dns_resolution_failed`        | Early exit (domain not resolvable)     |
 
 ---
 
