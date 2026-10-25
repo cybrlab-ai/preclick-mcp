@@ -1,6 +1,6 @@
 # PreClick MCP Server
 
-[![smithery badge](https://smithery.ai/badge/cybrlab-ai/urlcheck-mcp)](https://smithery.ai/server/cybrlab-ai/urlcheck-mcp)
+[![LightNow capabilities](https://lightnow.ai/badge/ai.preclick/preclick-mcp)](https://lightnow.ai/servers/ai.preclick/preclick-mcp)
 
 > **PreClick — An MCP-native URL preflight scanning service for autonomous agents. It scans links for threats and confirms they match the intended task before execution. Built for agentic workflows, it provides high-accuracy, context-aware browsing governance with adaptive learning.**
 
